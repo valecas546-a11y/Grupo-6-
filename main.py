@@ -4,8 +4,11 @@ from paciente import Paciente
 from medico import Medico
 from cita import Cita
 
-pacientes = []
-medicos = []
+paciente1 = Paciente("P001", "Carlos Mendoza", 28)
+medico1 = Medico("M001", "Ana Torres", "Medicina General")
+
+pacientes = [paciente1]
+medicos = [medico1]
 citas = []
 
 def pedir_texto(mensaje):
@@ -28,7 +31,6 @@ def pedir_nombre(mensaje):
 
 
 def pedir_edad(mensaje):
-    
     while True:
         valor = input(mensaje).strip()
         try:
@@ -120,13 +122,22 @@ def registrar_medico():
 
 def buscar_registro():
     print("\n--- Buscar por código ---")
-    tipo = pedir_texto("¿Buscar en (paciente/medico)? ").strip().lower()
-    lista = {"paciente": pacientes, "medico": medicos}.get(tipo)
-    if lista is None:
-        print("Opción inválida,escribe paciente o medico.\n")
+    print("1. Buscar Paciente")
+    print("2. Buscar Médico")
+    
+    opcion = input("\nElige una opción (1 o 2): ").strip()
+    
+    if opcion == "1":
+        lista = pacientes
+        etiqueta = "el paciente"
+    elif opcion == "2":
+        lista = medicos
+        etiqueta = "el médico"
+    else:
+        print("Opción inválida. Debes elegir 1 o 2.\n")
         return
 
-    resultado = obtener_existente(lista, "Codigo a buscar: ", f"el {tipo}")
+    resultado = obtener_existente(lista, "Código a buscar: ", etiqueta)
     if resultado is not None:
         print(f"Encontrado: {resultado.resumen()}\n")
 
